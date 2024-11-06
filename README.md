@@ -17,7 +17,7 @@ One simple example is included, which solves a standard RBC model without using 
 
 ### Model file
 * Example: `models/RBC_noquad_2D.py`*
-- Inputs: old policy (`pol_old`, which is a spline constructed with `np.RegularGriddInterpolator`), policy at grid points (`lc_pol`), `xx` which contains all gridpoints ($m$m x $n$ array)
+- Inputs: old policy (`pol_old`, which is a spline constructed with `np.RegularGridInterpolator`), policy at grid points (`lc_pol`), `xx` which contains all gridpoints ($m$m x $n$ array)
 - Output: Euler residual vector (`RES`, length $m$)
 
 ### Set parameters and compute steady state
