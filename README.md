@@ -1,5 +1,5 @@
 # Promes-python
-Toolbox to solve infinite horizon DSGE models with time iteration and spline approximation
+Toolbox to solve infinite horizon DSGE models with time iteration and spline approximation.\
 *Required pacakges for Python 3: numpy, scipy.interpolate, math*
 
 Currently (6.11.24) the toolbox is only suited for a 2-dimensional state space, and a 1-dimensional policy. It only includes two modules:
