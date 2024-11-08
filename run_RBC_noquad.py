@@ -3,7 +3,7 @@
 import numpy as np
 import math
 from scipy.optimize import fsolve
-from models import RBC_noquad_2D as RBC
+from models import RBC_noquad as RBC
 from subfun import gridfun_2D as gf
 from subfun import get_spline_2D as gs
 
