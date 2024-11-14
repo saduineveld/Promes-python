@@ -25,12 +25,12 @@ def get_omega(alpha,beta,delta,zss):
     return omega
 
 def get_kss_norm(alpha,beta,delta,zss):# Normalized hss=1
-    omega = omega(alpha,beta,delta,zss)
+    omega = get_omega(alpha,beta,delta,zss)
     kss = omega**(1/(alpha-1))
     return kss
 
 def get_chi(alpha,beta,delta,nu,zss):
-    omega = get_cssomega(alpha,beta,delta,zss)
+    omega = get_omega(alpha,beta,delta,zss)
     kss = omega**(1/(alpha-1))
     css = get_css(zss,omega,delta,kss)
     chi = (1-alpha)*css**-nu*zss*kss**alpha
