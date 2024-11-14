@@ -7,6 +7,8 @@ from models import RBC_noquad as RBC
 from subfun import gridfun_2D as gf
 from subfun import get_spline_2D as gs
 
+import matplotlib.pyplot as plt
+
 # Parameters
 alpha = 0.36
 beta = 0.985
@@ -41,8 +43,8 @@ xx,xx_mat = gf.get_grid(grid_input)
 grid_vecs = gf.get_vecs(grid_input)
 
 # Initialize policy function
-lkt = xx[:,0]#1 dim. vector (step added for clarity)
-lzt = xx[:,1]#1 dim. vector (step added for clarity)
+lkt = xx[:,0]#1 dim. vector (code line added for clarity)
+lzt = xx[:,1]#1 dim. vector (code line added for clarity)
 lc_old = np.log(css)+0.01*(lkt - np.log(kss)) + 0.01*lzt#col. vector
 pol_old = gs.get_spline(lc_old,xx_mat,grid_vecs)
 
@@ -70,3 +72,34 @@ while True:
 
 # Rename solution:
 pol = pol_old
+
+## Plot policy function
+# 1. construct grids
+
+
+# A. lk = [lk1,...,lkn]; lz = zeros
+# B. lk = lkss; lz=[lz1,...,lzn]
+
+nodes_plt = 11
+lk_A = np.reshape(np.linspace(np.log(kss)-lk_dev,np.log(kss)+lk_dev,nodes_plt),(-1,1))
+lz_A = np.zeros(lk_A.shape)
+xx_A = np.concatenate((lk_A,lz_A),axis=1)
+
+lk_B = np.log(kss)*np.ones(lk_A.shape)
+#lk_plot = np.concatenate((lk_A,lk_B),axis=0)
+lz_B = np.reshape(np.linspace(-lz_fac*lz_std,lz_fac*lz_std,nodes_plt),(-1,1))
+#lz_plot = np.concatenate((lz_A,lz_B),axis=0)
+xx_B = np.concatenate((lk_B,lz_B),axis=1)
+
+## 2. evaluate policy at grid
+lc_A = pol(xx_A)
+plt.plot(lk_A,lc_A)
+plt.scatter(np.log(kss),np.log(css),c='red')
+plt.show()
+
+lc_B = pol(xx_B)
+plt.plot(lz_B,lc_B)
+plt.scatter(0,np.log(css),c='red')
+plt.show()
+
+
