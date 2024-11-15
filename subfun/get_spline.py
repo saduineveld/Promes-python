@@ -4,10 +4,10 @@ import numpy as np
 from scipy.interpolate import RegularGridInterpolator
 
 def get_grid_pol(y_col,xx_grid):
-    nn = np.shape(xx_grid)[0]     
-    if nn == 1:
+    ndim = xx_grid.ndim   
+    if ndim == 1:
         y_grid = y_col 
-    elif nn > 1:
+    elif ndim > 1:
         y_grid = np.reshape(y_col,np.shape(xx_grid)[1:])   
     else:
         print("More than 4 dimensions not implemented")
@@ -15,7 +15,7 @@ def get_grid_pol(y_col,xx_grid):
 
 def constr_spline(y_grid,grid_vecs):
     nn = len(grid_vecs)
-    if nn > 1 and nn < 5:
+    if nn > 0 and nn < 5:
         pol = RegularGridInterpolator(grid_vecs,y_grid,"cubic",bounds_error=False,fill_value=None)
     else:
         print("More than 4 dimensions not implemented")

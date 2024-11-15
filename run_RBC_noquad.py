@@ -4,8 +4,8 @@ import numpy as np
 import math
 from scipy.optimize import fsolve
 from models import RBC_noquad as RBC
-from subfun import gridfun_2D as gf
-from subfun import get_spline_2D as gs
+from subfun import gridfun as gf
+from subfun import get_spline as gs
 
 import matplotlib.pyplot as plt
 
@@ -21,8 +21,8 @@ chi = 1
 zss = 1
 
 # Optimization parameters
-max_error = 1e-6
-x_tol     = 1e-8
+max_error = 1e-8
+x_tol     = 1e-10
 
 # Get steady state:
 kss,css,hss = RBC.get_kss(alpha,beta,chi,delta,eta,nu,zss)

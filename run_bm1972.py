@@ -4,14 +4,14 @@ import numpy as np
 import math
 from scipy.optimize import fsolve
 from models import bm1972 as bm
-from subfun import gridfun_2D as gf
-from subfun import get_spline_2D as gs
+from subfun import gridfun as gf
+from subfun import get_spline as gs
 
 import matplotlib.pyplot as plt
 
 # Parameters
 alpha = 0.36
-beta = 0.985
+beta = 0.99
 
 # Optimization parameters
 max_error = 1e-8
@@ -27,19 +27,17 @@ lk_inp =  [np.log(kss)-lk_dev,np.log(kss)+lk_dev,k_nodes]
 
 # Get grid:
 grid_input = np.array([lk_inp])
-xx,xx_mat = gf.get_grid(grid_input)
-print("xx",xx)
-print("xx_mat",xx_mat)
+xx,xx_grid = gf.get_grid(grid_input)
 grid_vecs = gf.get_vecs(grid_input)
 
 # Initialize policy function
 lkt = xx#1 dim. vector (code line added for clarity)
 lc_old = np.log(css)+0.01*(lkt - np.log(kss)) #col. vector
-pol_old = gs.get_spline(lc_old,xx_mat,grid_vecs)
+pol_old = gs.get_spline(lc_old,xx_grid,grid_vecs)
 
 # Create a new definition only for clarity
 def equations(lc_pol,alpha,beta,xx,pol_old):
-    RES = RBC.get_res(alpha,beta,xx,pol_old,lc_pol)
+    RES = bm.get_res(alpha,beta,xx,pol_old,lc_pol)
     return RES
 
 # Set jacobian pattern (diagonal maxtrix of ones)
@@ -52,7 +50,7 @@ while True:
     lc_sol = fsolve(equations, lc_old, fprime=jacobian_pattern, args=(alpha,beta,xx,pol_old), xtol=x_tol)
     #print(lc_new)
     lc_old = lc_sol  # update lc_old
-    pol_old = gs.get_spline(lc_sol,xx_mat,grid_vecs)  # update pol_old
+    pol_old = gs.get_spline(lc_sol,xx_grid,grid_vecs)  # update pol_old
     RES = equations(lc_old,alpha,beta,xx,pol_old)
     cnt = cnt + 1
     print(RES)
@@ -74,8 +72,8 @@ lk_vec = np.reshape(np.linspace(np.log(kss)-lk_dev,np.log(kss)+lk_dev,nodes_plt)
 
 ## 2. evaluate policy at grid
 lc_vec = pol(lk_vec)
-plt.plot(lk_vec,lc_vec)
-plt.scatter(np.log(kss),np.log(css),c='red')
+plt.plot(np.exp(lk_vec),np.exp(lc_vec))
+plt.scatter(kss,css,c='red')
 plt.show()
 
 

@@ -34,7 +34,7 @@ def get_grid(grid_input):
         
     #mm = np.prod(grid_input[:,[2]])
     if nn == 1:
-        xx = np.reshape(xx_grid,(-1,1))
+        xx = xx_grid
     else:
         for ii in range (0,nn):
             xi = xx_grid[ii]
@@ -44,4 +44,4 @@ def get_grid(grid_input):
             else:
                 xx = np.concatenate((xx,x_rsh),axis=1)
 
-    return xx,xx_grid#xx are concatenated column vectors, xx_grid is meshgrid
+    return xx,xx_grid#xx are concatenated column vectors, xx_grid is meshgrid, except when state is 1D: then xx is a 1D array!

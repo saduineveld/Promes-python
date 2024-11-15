@@ -5,8 +5,6 @@ from scipy.interpolate import RegularGridInterpolator
 
 def get_mat_pol(y_col,xx_mat):
     nn = np.shape(xx_mat)[0]
-    print("nn",nn)
-     
     if nn == 1:
         y_mat = y_col 
     elif nn == 2:
