@@ -2,7 +2,7 @@
 Toolbox to solve infinite horizon DSGE models with time iteration and spline approximation.\
 *Required pacakges for Python 3: numpy, scipy.interpolate, math*
 
-Currently (6.11.24) the toolbox is only suited for upto 4-dimensional state space (easily expanded to more dimensions though), and a 1-dimensional policy. It only includes two modules:
+Currently (6.11.24) the toolbox is only suited for upto 4-dimensional state space (although only tested upto 2D, but should be easily expanded to more than 4 dimensions in "grid_fun"), and a 1-dimensional policy. It only includes two modules:
 - gridfun.py
 - get_spline.py
 
