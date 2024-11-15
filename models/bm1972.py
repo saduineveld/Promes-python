@@ -17,7 +17,7 @@ def get_res(alpha,beta,xx,pol_old,lc_pol):
 
 def get_kss(alpha,beta):
     kss = 1/(alpha*beta)**(1/(alpha-1))
-    css = prod(alpha,kss) - kss
+    css = prod(alpha,kss)[0] - kss
     return kss,css
 
 def marg_ut(cc):
@@ -29,7 +29,7 @@ def knext(alpha,kt,ct):
     return kn
 
 def cons(alpha,kt,kn):
-    ct = prod(alpha,kt) - kn
+    ct = prod(alpha,kt)[0] - kn
     return ct
 
 def prod(alpha,kt): 

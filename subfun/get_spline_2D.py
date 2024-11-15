@@ -5,11 +5,13 @@ from scipy.interpolate import RegularGridInterpolator
 
 def get_mat_pol(y_col,xx_mat):
     nn = np.shape(xx_mat)[0]
-    nod1 = np.shape(xx_mat)[1]
-    nod2 = np.shape(xx_mat)[2]
+    print("nn",nn)
+     
     if nn == 1:
         y_mat = y_col 
     elif nn == 2:
+        nod1 = np.shape(xx_mat)[1]   
+        nod2 = np.shape(xx_mat)[2]
         y_mat = np.reshape(y_col,(nod1,nod2))         
     elif nn > 2:
         print("More than 2 dimensions not implemented")

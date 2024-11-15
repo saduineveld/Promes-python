@@ -21,8 +21,8 @@ chi = 1
 zss = 1
 
 # Optimization parameters
-max_error = 1e-8
-x_tol     = 1e-10
+max_error = 1e-6
+x_tol     = 1e-8
 
 # Get steady state:
 kss,css,hss = RBC.get_kss(alpha,beta,chi,delta,eta,nu,zss)

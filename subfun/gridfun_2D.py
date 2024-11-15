@@ -32,14 +32,21 @@ def get_grid(grid_input):
     elif nn > 2:
         print("More than 2 dimensions not implemented")
 
-    mm = np.prod(grid_input[:,[2]])
-    for ii in range (0,nn):
-        xi = xx_mat[ii]
-        x_rsh = np.reshape(xi,(-1,1))
-        if ii == 0:
-            xx = x_rsh    
-        else:
-            xx = np.concatenate((xx,x_rsh),axis=1)
+
+    #mm = np.prod(grid_input[:,[2]])
+    if nn == 1:
+        xx = xx_mat
+    else:
+        for ii in range (0,nn):
+            xi = xx_mat[ii]
+            print("xi",xi)
+            x_rsh = np.reshape(xi,(-1,1))
+            print("x_rsh",x_rsh)
+            if ii == 0:
+                xx = x_rsh    
+            else:
+                xx = np.concatenate((xx,x_rsh),axis=1)
+
     return xx, xx_mat#xx are concatenated column vectors, xx_mat is meshgrid
 
     

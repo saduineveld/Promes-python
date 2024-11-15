@@ -28,10 +28,12 @@ lk_inp =  [np.log(kss)-lk_dev,np.log(kss)+lk_dev,k_nodes]
 # Get grid:
 grid_input = np.array([lk_inp])
 xx,xx_mat = gf.get_grid(grid_input)
+print("xx",xx)
+print("xx_mat",xx_mat)
 grid_vecs = gf.get_vecs(grid_input)
 
 # Initialize policy function
-lkt = xx[:,0]#1 dim. vector (code line added for clarity)
+lkt = xx#1 dim. vector (code line added for clarity)
 lc_old = np.log(css)+0.01*(lkt - np.log(kss)) #col. vector
 pol_old = gs.get_spline(lc_old,xx_mat,grid_vecs)
 
