@@ -19,6 +19,7 @@ x_tol     = 1e-10
 
 # Get steady state:
 kss,css = bm.get_kss(alpha,beta)
+print("kss,css",(kss,css))
 
 # Construct grid vectors (keep lz=0 for now)
 k_nodes = 5
