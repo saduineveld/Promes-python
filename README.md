@@ -2,16 +2,16 @@
 Toolbox to solve infinite horizon DSGE models with time iteration and spline approximation.\
 *Required pacakges for Python 3: numpy, scipy.interpolate, math*
 
-Currently (6.11.24) the toolbox is only suited for a 2-dimensional state space, and a 1-dimensional policy. It only includes two modules:
-- gridfun_2D.py
-- get_spline_2D.py
+Currently (6.11.24) the toolbox is only suited for upto 4-dimensional state space (easily expanded to more dimensions though), and a 1-dimensional policy. It only includes two modules:
+- gridfun.py
+- get_spline.py
 
-One simple example is included, which solves a standard RBC model without using any type of quadrature (it uses a simply point-estimate for future exogenous state variable).
+Two simple examples are included. ONe is the 1 dimensional Brock-Mirman model. The other is a standard RBC model without using any type of quadrature (it uses a simply point-estimate for future exogenous state variable).
 
 ## Short Manual
 * We added code from the example "run_RBC_no_quad.py" 
 ### Glossary
-- $n$: number of dimensions of state space (maximum is currentl 2)
+- $n$: number of dimensions of state space (maximum is currently 4)
 - $m$: total number of gridpoints
 - grid: rectangular grid of state space
 
@@ -36,7 +36,7 @@ xi_inp = [lower bound, upper bound, number of nodes]
 grid_input = np.array([x1_inp,...,xn_inp])
 ```
 
-3. Get `xx` ($m$ x $n$ array) containing all gridpoints, and get `xx_mat` ($n$ x $nod1$ x $nod2$ array), which contains the same gridpoints, but in a $n+1$ dimensional grid:
+3. Get `xx` ($m$ x $n$ array, except for 1D: vector of length $m$) containing all gridpoints, and get `xx_mat` ($n$ x ($nod_n1$ x ... x $nod_n$ array), except for 1D, then vector of lenght $nod_1$), which contains the same gridpoints, but in a $n+1$ dimensional grid:
 ```
 xx,xx_mat = gf.get_grid(grid_input)
 ```
