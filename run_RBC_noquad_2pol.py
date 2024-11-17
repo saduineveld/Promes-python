@@ -140,5 +140,11 @@ plt.plot(lz_B,lh_B)
 plt.scatter(0,np.log(hss),c='red')
 plt.show()
 
+# Compute savings rate in steady state:
+yss = RBC.prod(alpha,1,kss,hss)[0]
+iss = yss-css
+print("Savings rate in steady state is ",iss/yss)
+
+
 
 

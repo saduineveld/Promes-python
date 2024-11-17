@@ -48,7 +48,8 @@ def jacobian_pattern(lc_old, *args):
 # Solve current policy, given old policy (used in t+1), until convergence:
 cnt = 0
 while True:
-    lc_sol = fsolve(equations, lc_old, fprime=jacobian_pattern, args=(alpha,beta,xx,pol_old), xtol=x_tol)
+    #lc_sol = fsolve(equations, lc_old, fprime=jacobian_pattern, args=(alpha,beta,xx,pol_old), xtol=x_tol)
+    lc_sol = fsolve(equations, lc_old, args=(alpha,beta,xx,pol_old), xtol=x_tol)
     #print(lc_new)
     lc_old = lc_sol  # update lc_old
     pol_old = gs.get_spline(lc_sol,xx_grid,grid_vecs)  # update pol_old
