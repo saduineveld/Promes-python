@@ -1,22 +1,38 @@
-# RBC_noq model (no quadrature) module
+# RBC no quadrature, 2 policy model (no quadrature) module
 
 import numpy as np
 
-def get_res(alpha,beta,chi,delta,eta,nu,rho_z,xx,pol_old,lc_pol):
+def get_res(alpha,beta,chi,delta,eta,nu,rho_z,xx,pol_old,ly_pol):
+    mm = np.round(len(ly_pol)/2).astype(int)
+    lc_pol = ly_pol[0:mm]
+    lh_pol = ly_pol[mm:]
+
+    if not len(lc_pol)== mm or not len(lh_pol)== mm:
+        print("length of policy is not correct")
+
     ct = np.exp(lc_pol)
-    kt = np.exp(xx[:,0])#First column
-    zt = np.exp(xx[:,1])#Second column
-    ht = labour(alpha,chi,eta,nu,zt,kt,ct)
+    ht = np.exp(lh_pol)
+    lkt = xx[:,0]
+    kt = np.exp(lkt)#First column
+    lzt = xx[:,1]
+    zt = np.exp(lzt)#Second column
+    # LH = par.eta/(1+par.alpha*par.eta) * ( -log(par.chi) -par.nu*LC + log(1-par.alpha) + LZ + par.alpha*LK );
+    RES2 = eta/(1+alpha*eta)*(-np.log(chi)-nu*lc_pol + np.log(1-alpha) + lzt + alpha*lkt) - lh_pol
+
     # Next period (n)
     kn = knext(alpha,delta,zt,kt,ht,ct)
     zn = np.exp(rho_z*xx[:,1])
     #Construct column vectors:
     lkn = np.log(kn[:,None])
     lzn = np.log(zn[:,None])
-    cn = np.exp(pol_old(np.concatenate((lkn,lzn),axis=1)))
+    polc_old = pol_old[0]
+    polh_old = pol_old[1]
+    cn = np.exp(polc_old(np.concatenate((lkn,lzn),axis=1)))
+    #hn = np.exp(polh_old(np.concatenate((lkn,lzn),axis=1)))
     hn = labour(alpha,chi,eta,nu,zn,kn,cn)
     rn = prod(alpha,zn,kn,hn)[1]    
-    RES = beta*cn**-nu*(rn+1-delta)/(ct**-nu) - 1
+    RES1 = beta*cn**-nu*(rn+1-delta)/(ct**-nu) - 1    
+    RES = np.concatenate((RES1,RES2),axis=0)
     return RES
 
 
