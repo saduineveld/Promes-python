@@ -88,10 +88,10 @@ while True:
     pol_old = (polc_old,polh_old)
     RES = equations(ly_old,alpha,beta,chi,delta,eta,nu,rho_z,xx,pol_old)
     cnt = cnt + 1
-    if cnt == 1:
-        print(RES)
-    elif cnt % 1 == 0:
-        print(RES) 
+    #if cnt == 1:
+     #   print(RES)
+    #elif cnt % 10== 0:
+     #   print(RES) 
 
     if np.all(np.abs(RES) < max_error):
         break
@@ -147,9 +147,18 @@ print("Savings rate in steady state is ",sss)
 
 # Compute implied savings rate policy:
 #sav_rat(alpha,zt,kt,ht,ct): 
-st_A = RBC.sav_rat(alpha,np.exp(lz_A),np.exp(lk_A),np.exp(lh_A),np.exp(lc_A))
+h_A_tr = np.exp(lh_A)[:, np.newaxis]
+c_A_tr = np.exp(lc_A)[:, np.newaxis]
+st_A = RBC.sav_rat(alpha,np.exp(lz_A),np.exp(lk_A),h_A_tr,c_A_tr)
+
 plt.plot(lk_A,st_A)
 plt.scatter(np.log(kss),sss,c='red')
 plt.show()
 
+h_B_tr = np.exp(lh_B)[:, np.newaxis]
+c_B_tr = np.exp(lc_B)[:, np.newaxis]
+st_B = RBC.sav_rat(alpha,np.exp(lz_B),np.exp(lk_B),h_B_tr,c_B_tr)
 
+plt.plot(lz_B,st_B)
+plt.scatter(0,sss,c='red')
+plt.show()
