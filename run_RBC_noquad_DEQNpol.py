@@ -3,7 +3,7 @@
 import numpy as np
 import math
 from scipy.optimize import fsolve
-from models import RBC_noquad_2pol as RBC
+from models import RBC_noquad_DEQNpol as RBC
 from subfun import gridfun as gf
 from subfun import get_spline as gs
 
@@ -142,9 +142,14 @@ plt.show()
 
 # Compute savings rate in steady state:
 yss = RBC.prod(alpha,1,kss,hss)[0]
-iss = yss-css
-print("Savings rate in steady state is ",iss/yss)
+sss = 1-css/yss
+print("Savings rate in steady state is ",sss)
 
-
+# Compute implied savings rate policy:
+#sav_rat(alpha,zt,kt,ht,ct): 
+st_A = RBC.sav_rat(alpha,np.exp(lz_A),np.exp(lk_A),np.exp(lh_A),np.exp(lc_A))
+plt.plot(lk_A,st_A)
+plt.scatter(np.log(kss),sss,c='red')
+plt.show()
 
 
