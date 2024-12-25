@@ -121,24 +121,15 @@ xx_B = np.concatenate((lk_B,lz_B),axis=1)
 
 ## 2. evaluate policy at grid
 lc_A = pol_c(xx_A)
-plt.plot(lk_A,lc_A)
-plt.scatter(np.log(kss),np.log(css),c='red')
-plt.show()
 
 lc_B = pol_c(xx_B)
-plt.plot(lz_B,lc_B)
-plt.scatter(0,np.log(css),c='red')
-plt.show()
+
 
 lh_A = pol_h(xx_A)
-plt.plot(lk_A,lh_A)
-plt.scatter(np.log(kss),np.log(hss),c='red')
-plt.show()
+
 
 lh_B = pol_h(xx_B)
-plt.plot(lz_B,lh_B)
-plt.scatter(0,np.log(hss),c='red')
-plt.show()
+
 
 # Compute savings rate in steady state:
 yss = RBC.prod(alpha,1,kss,hss)[0]
@@ -151,14 +142,43 @@ h_A_tr = np.exp(lh_A)[:, np.newaxis]
 c_A_tr = np.exp(lc_A)[:, np.newaxis]
 st_A = RBC.sav_rat(alpha,np.exp(lz_A),np.exp(lk_A),h_A_tr,c_A_tr)
 
-plt.plot(lk_A,st_A)
-plt.scatter(np.log(kss),sss,c='red')
-plt.show()
 
 h_B_tr = np.exp(lh_B)[:, np.newaxis]
 c_B_tr = np.exp(lc_B)[:, np.newaxis]
 st_B = RBC.sav_rat(alpha,np.exp(lz_B),np.exp(lk_B),h_B_tr,c_B_tr)
 
-plt.plot(lz_B,st_B)
-plt.scatter(0,sss,c='red')
-plt.show()
+pol_hk = (np.log(h_A_tr[-1])-np.log(h_A_tr[0]))/(lk_A[-1]-lk_A[0])
+pol_hz = (np.log(h_B_tr[-1])-np.log(h_B_tr[0]))/(lz_B[-1]-lz_B[0])
+pol_sk = (st_A[-1]-st_A[0])/(lk_A[-1]-lk_A[0])
+pol_sz = (st_B[-1]-st_B[0])/(lz_B[-1]-lz_B[0])
+print("pol h k",pol_hk)
+print("pol h z",pol_hz)
+print("pol s k",pol_sk)
+print("pol s z",pol_sz)
+
+
+show_plot = 1
+if show_plot == 1:
+    plt.plot(lk_A,lc_A)
+    plt.scatter(np.log(kss),np.log(css),c='red')
+    plt.show()
+
+    plt.plot(lz_B,lc_B)
+    plt.scatter(0,np.log(css),c='red')
+    plt.show()
+
+    plt.plot(lk_A,lh_A)
+    plt.scatter(np.log(kss),np.log(hss),c='red')
+    plt.show()
+
+    plt.plot(lz_B,lh_B)
+    plt.scatter(0,np.log(hss),c='red')
+    plt.show()
+
+    plt.plot(lk_A,st_A)
+    plt.scatter(np.log(kss),sss,c='red')
+    plt.show()
+
+    plt.plot(lz_B,st_B)
+    plt.scatter(0,sss,c='red')
+    plt.show()
